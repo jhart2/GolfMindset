@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://danielle-golf-mindset.netlify.app/sitemap.xml
