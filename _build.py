@@ -3,7 +3,7 @@ from pathlib import Path
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 ROOT = Path(__file__).parent
-ASSET_V = "9"
+ASSET_V = "10"
 
 # FormSubmit hash so Danielle’s Gmail is not in public HTML.
 FORM_ACTION = "https://formsubmit.co/2e812b1e92fe0f5f8e0a6f2ad102dafe"
@@ -59,7 +59,7 @@ FOOTER = f"""
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <h3>{BRAND}</h3>
+        <h3 class="footer-brand">{BRAND}</h3>
         <p>Personalized golf mindset coaching by telephone. Nationwide and worldwide, from the Boston, Massachusetts area.</p>
       </div>
       <div>
@@ -110,7 +110,7 @@ def page(slug, title, description, body, extra_head=""):
   <link rel="icon" href="/icons/favicon.svg?v={ASSET_V}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css?v={ASSET_V}">
   {extra_head}
 </head>

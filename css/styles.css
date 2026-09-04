@@ -19,11 +19,13 @@
   --line: rgba(16, 36, 26, 0.1);
   --line-strong: rgba(16, 36, 26, 0.16);
   --white: #fffefb;
+  --blush: #f3c5d0;
   --shadow: 0 18px 50px rgba(8, 20, 16, 0.12);
   --radius: 18px;
   --header-h: 92px;
   --max: 1180px;
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-script: "Great Vibes", "Snell Roundhand", "Segoe Script", cursive;
   --font-sans: Lato, "Helvetica Neue", sans-serif;
 }
 
@@ -271,11 +273,30 @@ body:not([data-page="index"]) .site-header .menu-toggle span::after,
   line-height: 1.05;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 1.22rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.brand-name,
+.footer-brand {
+  position: relative;
+  display: inline-block;
+  width: max-content;
+  font-family: var(--font-script);
+  font-size: 2.05rem;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  padding-bottom: 0.22em;
+}
+
+.brand-name::after,
+.footer-brand::after {
+  content: "";
+  position: absolute;
+  left: 0.06em;
+  right: 0.04em;
+  bottom: 0;
+  height: 0.42em;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 16' fill='none'%3E%3Cpath d='M4 11.5C42 3.5 78 14.5 118 8.2S186 2.2 216 10.8' stroke='%23f3c5d0' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 
 .brand-sub {
@@ -284,6 +305,7 @@ body:not([data-page="index"]) .site-header .menu-toggle span::after,
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 700;
+  margin-top: 0.18rem;
 }
 
 .nav {
@@ -1199,6 +1221,12 @@ button.price-card.is-selected {
   font-size: 1.1rem;
 }
 
+.footer-brand {
+  font-size: 2.2rem;
+  color: var(--cream);
+  margin: 0 0 0.7rem;
+}
+
 .footer-links {
   display: grid;
   gap: 0.4rem;
@@ -1329,6 +1357,15 @@ button.price-card.is-selected {
   .form-fields .btn,
   .form-fields .form-note {
     grid-column: auto;
+  }
+
+  .brand-name {
+    font-size: 1.72rem;
+  }
+
+  .brand-mark {
+    width: 48px;
+    height: 48px;
   }
 }
 
