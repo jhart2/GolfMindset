@@ -1,0 +1,51 @@
+{
+  "hosting": {
+    "site": "danielle-golf-mindset",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".gitignore",
+      ".git/**",
+      ".firebase/**",
+      "_qa/**",
+      "_build.py",
+      "netlify.toml",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        ]
+      },
+      {
+        "source": "/css/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=604800" }
+        ]
+      },
+      {
+        "source": "/images/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=604800" }
+        ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/background",
+        "destination": "/about.html",
+        "type": 301
+      },
+      {
+        "source": "/testimonials",
+        "destination": "/stories.html",
+        "type": 301
+      }
+    ]
+  }
+}

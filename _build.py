@@ -1,6 +1,6 @@
 from pathlib import Path
 
-SITE = "https://danielle-golf-mindset.netlify.app"
+SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle"
 ROOT = Path(__file__).parent
 
@@ -35,7 +35,7 @@ HEADER = f"""
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="/">
-        <img class="brand-mark" src="/icons/favicon.svg" alt="">
+        <img class="brand-mark" src="/icons/favicon.svg?v=4" alt="">
         <span class="brand-text">
           <span class="brand-name">{BRAND}</span>
           <span class="brand-sub">Golf Mindset Coaching</span>
@@ -54,7 +54,7 @@ FOOTER = f"""
     <div class="wrap footer-grid">
       <div>
         <h3>{BRAND}</h3>
-        <p>Golf mindset coaching by telephone for players who want more confidence, focus, and enjoyment on the course.</p>
+        <p>Golf mindset coaching for players who want more confidence, focus, and enjoyment on the course.</p>
       </div>
       <div>
         <h3>Explore</h3>
@@ -75,7 +75,7 @@ FOOTER = f"""
       </div>
     </div>
     <div class="wrap footer-bottom">
-      <span>© 2026 {BRAND} · Golf mindset coaching by telephone</span>
+      <span>© 2026 {BRAND}. All rights reserved.</span>
     </div>
   </footer>
   <script src="/js/site.js"></script>
@@ -99,11 +99,11 @@ def page(slug, title, description, body, extra_head=""):
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{SITE}/images/hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/icons/favicon.svg?v=4" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=4">
   {extra_head}
 </head>
 <body data-page="{slug}">
@@ -123,7 +123,7 @@ SCHEMA = f"""
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "{BRAND} Golf Mindset Coaching",
-  "description": "Golf mindset coaching by telephone to help players rebuild confidence, sharpen focus, and enjoy the game again.",
+  "description": "Golf mindset coaching to help players rebuild confidence, sharpen focus, and enjoy the game again.",
   "url": "{SITE}/",
   "areaServed": "Online",
   "serviceType": "Golf mindset coaching",
@@ -146,7 +146,7 @@ FAQ_SCHEMA = """
       "name": "What is golf mindset coaching?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Danielle offers one-to-one golf mindset coaching by telephone. Each conversation helps golfers work through mental barriers, rebuild confidence, and choose a practical next step."
+        "text": "Danielle offers one-to-one golf mindset coaching. Each conversation helps golfers work through mental barriers, rebuild confidence, and choose a practical next step."
       }
     },
     {
@@ -183,14 +183,14 @@ pages = {}
 pages["index.html"] = page(
     "index",
     "Golf Mindset Coach | Build Confidence & Enjoy Golf Again",
-    "One-to-one golf mindset coaching by telephone to help golfers of every age rebuild confidence, improve focus, and enjoy playing again.",
+    "One-to-one golf mindset coaching to help golfers of every age rebuild confidence, improve focus, and enjoy playing again.",
     """
     <section class="hero">
       <div class="hero-media">
         <img src="/images/hero.jpg" alt="A still green beside the water, flag in the cup">
       </div>
       <div class="hero-inner">
-        <p class="eyebrow" style="color:#c4a05a">Golf mindset coaching by telephone</p>
+        <p class="eyebrow">Golf mindset coaching</p>
         <h1>Build confidence. Find your focus. Enjoy golf again.</h1>
         <p class="lede">One-to-one mindset coaching for golfers who feel stuck, discouraged, or disconnected from the game. We turn what is holding you back into a clear, realistic next step.</p>
         <div class="hero-actions">
@@ -280,7 +280,7 @@ pages["index.html"] = page(
     <section class="section bg-forest">
       <div class="wrap split reverse">
         <div>
-          <p class="eyebrow" style="color:#c4a05a">How we talk</p>
+          <p class="eyebrow">How we talk</p>
           <h2>Phone calls. Not video. Not an app.</h2>
           <p>You leave your number. I call you. We talk like people used to talk — about the game, about why you stopped, about the next small step that gets you back on the grass.</p>
           <div class="actions">
@@ -330,7 +330,7 @@ pages["index.html"] = page(
 pages["about.html"] = page(
     "about",
     "About Danielle | Golf Mindset Coach for Every Age",
-    "Learn how Danielle’s experience helping a golfer return to the game inspired practical, one-to-one golf mindset coaching by telephone.",
+    "Learn how Danielle’s experience helping a golfer return to the game inspired practical, one-to-one golf mindset coaching.",
     """
     <section class="page-hero">
       <div class="wrap">
@@ -374,7 +374,7 @@ pages["about.html"] = page(
         <h2>Ready to work on your mental game?</h2>
         <p>Start with a one-to-one phone conversation about what has changed, what you want from golf now, and the next step that feels both useful and achievable.</p>
         <div class="actions">
-          <a class="btn btn-dark" href="/contact.html">Book a phone call</a>
+          <a class="btn btn-primary" href="/contact.html">Book a phone call</a>
           <a class="btn btn-outline" href="/philosophy.html">See the philosophy</a>
         </div>
       </div>
@@ -460,7 +460,7 @@ pages["philosophy.html"] = page(
 pages["services.html"] = page(
     "services",
     "Golf Mindset Coaching Services | Telephone Sessions",
-    "Explore one-to-one golf mindset coaching by telephone for confidence, focus, motivation, and a more enjoyable return to the game.",
+    "Explore one-to-one golf mindset coaching for confidence, focus, motivation, and a more enjoyable return to the game.",
     """
     <section class="page-hero">
       <div class="wrap">
@@ -515,7 +515,7 @@ pages["services.html"] = page(
         <h2>Start with a conversation.</h2>
         <p class="lede">Share what you are experiencing and what you want from the game. If the coaching is a good fit, you will know the format and next steps before you commit.</p>
         <div class="actions">
-          <a class="btn btn-dark" href="/contact.html">Leave your number</a>
+          <a class="btn btn-primary" href="/contact.html">Leave your number</a>
           <a class="btn btn-outline" href="/process.html">See how a call works</a>
         </div>
       </div>
@@ -575,7 +575,7 @@ pages["process.html"] = page(
       <div class="wrap">
         <h2>Ready when you are.</h2>
         <p class="lede">The first step is your phone number.</p>
-        <a class="btn btn-dark" href="/contact.html">Book a phone call</a>
+        <a class="btn btn-primary" href="/contact.html">Book a phone call</a>
       </div>
     </section>
     """,
@@ -628,7 +628,7 @@ pages["stories.html"] = page(
       <div class="wrap prose">
         <h2>Choose your next chapter in golf</h2>
         <p>Whether you want to enjoy practice again, return after a long break, or feel calmer on the course, we can define a first step that feels like yours.</p>
-        <a class="btn btn-dark" href="/contact.html">Book a phone call</a>
+        <a class="btn btn-primary" href="/contact.html">Book a phone call</a>
       </div>
     </section>
     """,
@@ -637,7 +637,7 @@ pages["stories.html"] = page(
 pages["faq.html"] = page(
     "faq",
     "Golf Mindset Coaching FAQ | Danielle",
-    "Answers about golf mindset coaching by telephone, including who it helps, how sessions work, and what makes it different from swing instruction.",
+    "Answers about golf mindset coaching, including who it helps, how sessions work, and what makes it different from swing instruction.",
     """
     <section class="page-hero">
       <div class="wrap">
@@ -650,7 +650,7 @@ pages["faq.html"] = page(
       <div class="wrap" style="max-width:46rem">
         <details class="faq-item" open>
           <summary>What is this coaching?</summary>
-          <p>One-to-one golf mindset coaching by telephone. We work on confidence, focus, motivation, and practical actions that help you practise or play with more enjoyment.</p>
+          <p>One-to-one golf mindset coaching. We work on confidence, focus, motivation, and practical actions that help you practise or play with more enjoyment.</p>
         </details>
         <details class="faq-item">
           <summary>Do we talk on Zoom or FaceTime?</summary>
@@ -677,7 +677,7 @@ pages["faq.html"] = page(
           <p>Leave your name, number, and a few sentences on the contact page. Danielle will call you.</p>
         </details>
         <div class="actions" style="margin-top:2rem">
-          <a class="btn btn-dark" href="/contact.html">Book a phone call</a>
+          <a class="btn btn-primary" href="/contact.html">Book a phone call</a>
         </div>
       </div>
     </section>
@@ -727,7 +727,7 @@ pages["contact.html"] = page(
             <label>What should I know before I call?
               <textarea name="message" required placeholder="I miss the game… the clubs are in the garage… I want to chip and putt again…"></textarea>
             </label>
-            <button class="btn btn-dark" type="submit">Book a call</button>
+            <button class="btn btn-primary" type="submit">Book a call</button>
             <p class="form-note">Danielle will telephone you. This is not a video call. Nothing is sold or posted.</p>
           </div>
         </form>
