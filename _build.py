@@ -3,7 +3,7 @@ from pathlib import Path
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 ROOT = Path(__file__).parent
-ASSET_V = "10"
+ASSET_V = "12"
 
 # FormSubmit hash so Danielle’s Gmail is not in public HTML.
 FORM_ACTION = "https://formsubmit.co/2e812b1e92fe0f5f8e0a6f2ad102dafe"
@@ -110,7 +110,7 @@ def page(slug, title, description, body, extra_head=""):
   <link rel="icon" href="/icons/favicon.svg?v={ASSET_V}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css?v={ASSET_V}">
   {extra_head}
 </head>
@@ -125,8 +125,10 @@ def page(slug, title, description, body, extra_head=""):
 """
 
 
-def form_html(name, next_path, subject, extra_fields, submit_label, success_copy):
+def form_html(name, next_path, subject, extra_fields, submit_label, success_copy, note=None):
     next_url = f"{SITE}/{next_path}?success={name}"
+    if note is None:
+        note = "Danielle receives this and calls you by telephone. No video. No camera."
     return f"""
         <form class="form" name="{name}" id="{name}-form" method="POST" action="{FORM_ACTION}">
           <p class="form-success">{success_copy}</p>
@@ -139,7 +141,7 @@ def form_html(name, next_path, subject, extra_fields, submit_label, success_copy
             <input type="hidden" name="_template" value="table">
             {extra_fields}
             <button class="btn btn-primary" type="submit">{submit_label}</button>
-            <p class="form-note">Danielle receives this and calls you by telephone. No video. No camera.</p>
+            <p class="form-note">{note}</p>
           </div>
         </form>
 """
@@ -679,7 +681,7 @@ pages["services.html"] = page(
           <h3>$50 toward your next call</h3>
           <p>When a golfer you refer books a session, you receive $50 credit toward your next conversation. Mention who sent you when you book.</p>
           <div class="actions">
-            <a class="btn btn-outline" href="/book.html">Book Now</a>
+            <a class="btn btn-outline" href="/book.html#refer">Refer a golfer</a>
           </div>
         </article>
       </div>
@@ -855,7 +857,7 @@ pages["faq.html"] = page(
         </details>
         <details class="faq-item">
           <summary>How does the referral credit work?</summary>
-          <p>Refer a golfer you know. When they book a session, you receive $50 credit toward your next call. Mention who sent you on the booking form.</p>
+          <p>Use the refer form on the Book page, or have them mention your name when they book. When they book a session, you receive $50 credit toward your next call.</p>
         </details>
         <details class="faq-item">
           <summary>How do I start?</summary>
@@ -1012,6 +1014,24 @@ pages["book.html"] = page(
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section class="section bg-cream" id="refer">
+      <div class="wrap split">
+        <div class="prose">
+          <p class="eyebrow">Refer a golfer</p>
+          <h2>$50 toward your next call</h2>
+          <p>Send Danielle a golfer you know. When they book a session, you receive $50 credit toward your next conversation. They can also mention your name on the booking form.</p>
+        </div>
+        {form_html(
+            "refer",
+            "book.html",
+            "Golf mindset referral",
+            REFER_FIELDS,
+            "Send the referral",
+            "Got it. Danielle will reach out to them. You receive the $50 credit when they book.",
+            "Danielle receives this and contacts them. No video. No camera.",
+        )}
       </div>
     </section>
     """,

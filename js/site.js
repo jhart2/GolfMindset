@@ -57,7 +57,8 @@
 
   const params = new URLSearchParams(window.location.search);
   const success = params.get("success");
-  if (success && page !== "book") {
+  const hash = (window.location.hash || "").replace("#", "");
+  if (success === "refer" || (success && page !== "book")) {
     const form =
       document.querySelector(`form[name="${success}"]`) ||
       document.querySelector("form.form");
@@ -150,6 +151,8 @@
 
     if (params.get("success") === "book") {
       show("email", false);
+    } else if (success === "refer" || hash === "refer") {
+      /* leave #refer in place so the footer link can land on the form */
     } else {
       show("session", false);
     }
