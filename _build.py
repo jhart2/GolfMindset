@@ -290,7 +290,7 @@ FAQ_SCHEMA = """
     },
     {
       "@type": "Question",
-      "name": "How long are sessions and what do they cost?",
+      "name": "How long are sessions?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment on the telephone call."
@@ -834,7 +834,7 @@ pages["faq.html"] = page(
           <p>The Boston, Massachusetts area. Sessions are by phone, so you do not need to be local.</p>
         </details>
         <details class="faq-item">
-          <summary>How long are sessions and what do they cost?</summary>
+          <summary>How long are sessions?</summary>
           <p>Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment when she calls you.</p>
         </details>
         <details class="faq-item">

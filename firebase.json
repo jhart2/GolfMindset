@@ -10,6 +10,7 @@
       ".firebase/**",
       "_qa/**",
       "_build.py",
+      "README.md",
       "netlify.toml",
       "**/node_modules/**"
     ],
