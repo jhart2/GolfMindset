@@ -43,7 +43,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -1159,6 +1159,15 @@ button.price-card.is-selected {
 
 .confirm-box .lede {
   margin-inline: auto;
+}
+
+.thanks-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.thanks-wrap .confirm-box {
+  width: min(100%, 36rem);
 }
 
 .usp-row {

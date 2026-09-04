@@ -3,11 +3,10 @@ from pathlib import Path
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 ROOT = Path(__file__).parent
-ASSET_V = "12"
+ASSET_V = "16"
 
 # FormSubmit hash so Danielle’s Gmail is not in public HTML.
 FORM_ACTION = "https://formsubmit.co/2e812b1e92fe0f5f8e0a6f2ad102dafe"
-FORM_AJAX = "https://formsubmit.co/ajax/2e812b1e92fe0f5f8e0a6f2ad102dafe"
 
 NAV = """
       <nav class="nav" id="site-nav">
@@ -90,7 +89,7 @@ FOOTER = f"""
 """
 
 
-def page(slug, title, description, body, extra_head=""):
+def page(slug, title, description, body, extra_head="", robots="index,follow"):
     canonical = f"{SITE}/" if slug == "index" else f"{SITE}/{slug}.html"
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -100,7 +99,7 @@ def page(slug, title, description, body, extra_head=""):
   <title>{title}</title>
   <meta name="description" content="{description}">
   <link rel="canonical" href="{canonical}">
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="{robots}">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{description}">
   <meta property="og:type" content="website">
@@ -125,8 +124,8 @@ def page(slug, title, description, body, extra_head=""):
 """
 
 
-def form_html(name, next_path, subject, extra_fields, submit_label, success_copy, note=None):
-    next_url = f"{SITE}/{next_path}?success={name}"
+def form_html(name, subject, extra_fields, submit_label, success_copy, note=None):
+    next_url = f"{SITE}/thanks.html?from={name}"
     if note is None:
         note = "Danielle receives this and calls you by telephone. No video. No camera."
     return f"""
@@ -888,7 +887,6 @@ pages["contact.html"] = page(
       <div class="wrap split">
         {form_html(
             "contact",
-            "contact.html",
             "Golf mindset inquiry",
             CONTACT_FIELDS,
             "Send the note",
@@ -915,12 +913,12 @@ pages["book.html"] = page(
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Book</p>
-        <h1>Three steps. Then she calls.</h1>
+        <h1>Choose a session. Then she calls.</h1>
         <p class="lede">Choose a session, leave your details, and Danielle telephones you. Payment is set up on that call, not on this site.</p>
       </div>
     </section>
     <section class="section-tight">
-      <div class="wrap book-flow" id="book-flow" data-form-ajax="{FORM_AJAX}">
+      <div class="wrap book-flow" id="book-flow">
         <ol class="book-steps" aria-label="Booking steps">
           <li class="book-step is-current" data-step="session">
             <span class="book-step-icon" aria-hidden="true">
@@ -933,12 +931,6 @@ pages["book.html"] = page(
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h9l3 3v13H6z"/><path d="M15 4v4h4"/><path d="M8 12h8M8 16h6"/></svg>
             </span>
             <span class="book-step-label">Form</span>
-          </li>
-          <li class="book-step" data-step="email">
-            <span class="book-step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m4 8 8 6 8-6"/></svg>
-            </span>
-            <span class="book-step-label">Email</span>
           </li>
         </ol>
 
@@ -968,6 +960,8 @@ pages["book.html"] = page(
           <p class="lede">Danielle uses this to call you. Payment happens on that phone call.</p>
           <form class="form" name="book" id="book-form" method="POST" action="{FORM_ACTION}" novalidate>
             <p class="honeypot">Leave blank <input name="_gotcha" tabindex="-1" autocomplete="off"></p>
+            <input type="hidden" name="_next" value="{SITE}/thanks.html?from=book">
+            <input type="hidden" name="_redirect" value="{SITE}/thanks.html?from=book">
             <input type="hidden" name="_subject" value="Golf mindset booking">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
@@ -995,24 +989,10 @@ pages["book.html"] = page(
             <p class="book-error" hidden>Please fill in your name, phone, email, and a short note.</p>
             <div class="book-actions">
               <button type="button" class="btn btn-outline" data-back="session">Back</button>
-              <button type="submit" class="btn btn-primary">Continue to email</button>
+              <button type="submit" class="btn btn-primary">Send to Danielle</button>
             </div>
             <p class="form-note">No video. No camera. Danielle will call you and set up payment on the phone.</p>
           </form>
-        </div>
-
-        <div class="book-panel" data-panel="email" id="email">
-          <div class="confirm-box">
-            <span class="book-step-icon is-large" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m4 8 8 6 8-6"/></svg>
-            </span>
-            <h2>You’re booked in.</h2>
-            <p class="lede" id="book-confirm-copy">Danielle has your details. She will telephone you, confirm the session, and set up payment on that call.</p>
-            <p class="form-note">Watch your inbox for a note from Danielle. Keep your phone close.</p>
-            <div class="book-actions">
-              <a class="btn btn-primary" href="/">Back to home</a>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -1025,7 +1005,6 @@ pages["book.html"] = page(
         </div>
         {form_html(
             "refer",
-            "book.html",
             "Golf mindset referral",
             REFER_FIELDS,
             "Send the referral",
@@ -1035,6 +1014,32 @@ pages["book.html"] = page(
       </div>
     </section>
     """,
+)
+
+pages["thanks.html"] = page(
+    "thanks",
+    "Thank you | Danielle Seadia Golf Mindset",
+    "Danielle Seadia has your note and will be in touch by telephone.",
+    """
+    <section class="page-hero">
+      <div class="wrap thanks-wrap">
+        <div class="confirm-box">
+          <span class="book-step-icon is-large" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m4 8 8 6 8-6"/></svg>
+          </span>
+          <p class="eyebrow">Thank you</p>
+          <h1 id="thanks-title">You’re all set.</h1>
+          <p class="lede" id="thanks-copy">Danielle has your details. She will telephone you and set up payment on that call.</p>
+          <p class="form-note" id="thanks-note">Watch your inbox. Keep your phone close.</p>
+          <div class="book-actions" style="justify-content:center">
+            <a class="btn btn-primary" href="/">Back to home</a>
+            <a class="btn btn-outline" href="/book.html" id="thanks-book">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    """,
+    robots="noindex,follow",
 )
 
 pages["404.html"] = page(
