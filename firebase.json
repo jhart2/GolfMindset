@@ -42,8 +42,8 @@
         "type": 301
       },
       {
-        "source": "/testimonials",
-        "destination": "/stories.html",
+        "source": "/book",
+        "destination": "/book.html",
         "type": 301
       }
     ]
