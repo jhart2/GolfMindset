@@ -4,7 +4,7 @@ SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 BRAND_LOGO = '<span class="brand-cap">D</span>anielle <span class="brand-cap">S</span>eadia'
 ROOT = Path(__file__).parent
-ASSET_V = "22"
+ASSET_V = "23"
 
 # FormSubmit only accepts a real inbox until it issues its own random string
 # after the first activation. MD5 of the address is not a valid endpoint.
