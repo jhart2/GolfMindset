@@ -167,7 +167,7 @@
     const copy = {
       book: {
         title: "You’re booked in.",
-        lede: "Danielle has your details. She will telephone you, confirm the session, and set up payment on that call.",
+        lede: "Danielle has your details. She will telephone you, confirm the session, and set up payment on that call. All sales are final.",
         note: "Watch your inbox. Keep your phone close.",
       },
       contact: {

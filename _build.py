@@ -3,10 +3,11 @@ from pathlib import Path
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 ROOT = Path(__file__).parent
-ASSET_V = "16"
+ASSET_V = "18"
 
-# FormSubmit hash so Danielle’s Gmail is not in public HTML.
-FORM_ACTION = "https://formsubmit.co/2e812b1e92fe0f5f8e0a6f2ad102dafe"
+# FormSubmit only accepts a real inbox until it issues its own random string
+# after the first activation. MD5 of the address is not a valid endpoint.
+FORM_ACTION = "https://formsubmit.co/daniellespowerteam@gmail.com"
 
 NAV = """
       <nav class="nav" id="site-nav">
@@ -70,6 +71,7 @@ FOOTER = f"""
           <a href="/process.html">How it works</a>
           <a href="/stories.html">Golfer stories</a>
           <a href="/faq.html">FAQ</a>
+          <a href="/faq.html#policy">Policies</a>
         </div>
       </div>
       <div>
@@ -127,7 +129,7 @@ def page(slug, title, description, body, extra_head="", robots="index,follow"):
 def form_html(name, subject, extra_fields, submit_label, success_copy, note=None):
     next_url = f"{SITE}/thanks.html?from={name}"
     if note is None:
-        note = "Danielle receives this and calls you by telephone. No video. No camera."
+        note = "Danielle receives this and calls you by telephone. No video. No camera. All sales are final. No refunds."
     return f"""
         <form class="form" name="{name}" id="{name}-form" method="POST" action="{FORM_ACTION}">
           <p class="form-success">{success_copy}</p>
@@ -294,7 +296,15 @@ FAQ_SCHEMA = """
       "name": "How long are sessions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment on the telephone call."
+        "text": "Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment on the telephone call. All sales are final. No refunds, because the coaching is personalized."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there refunds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All sales are final. There are no refunds. Sessions are personalized coaching, prepared for you."
       }
     },
     {
@@ -385,8 +395,8 @@ pages["index.html"] = page(
           </article>
           <article class="hole">
             <div class="num">02</div>
-            <h3>Inner game first</h3>
-            <p>Your golf blueprint sets the ceiling. We notice the old thought, challenge it, and install a new one before the next shot.</p>
+            <h3>Her own style</h3>
+            <p>Coach background, a doctorate in metaphysics, and the warmth of a live conversation. Built around you, not a formula.</p>
           </article>
           <article class="hole">
             <div class="num">03</div>
@@ -430,7 +440,7 @@ pages["index.html"] = page(
           <article class="price-card featured">
             <div class="num">Full session</div>
             <h3>1 hour</h3>
-            <p>Room to go deeper: the golf blueprint, the round you cannot enjoy, and a plan you will actually use.</p>
+            <p>Room to go deeper: the round you cannot enjoy, and a plan you will actually use.</p>
             <a class="btn btn-primary" href="/book.html#session">Book 1 hour</a>
           </article>
         </div>
@@ -499,10 +509,10 @@ pages["about.html"] = page(
     </section>
     <section class="section bg-cream">
       <div class="wrap prose">
-        <h2>Inner-game training</h2>
-        <p>I coached clients in T. Harv Eker’s Peak Potentials Training, the inner-game work behind his #1 New York Times bestseller <em>Secrets of the Millionaire Mind</em>, with more than five million copies sold. That training is about the beliefs that quietly run results. I bring that same inner-game focus to golf: your blueprint, your thermostat, and the thought that shows up before you swing.</p>
-        <p>I also hold a Doctorate in Metaphysics, which deepens the inner-game work. This is not clinical psychology and it is not a replacement for a teaching pro. It is coaching for the human being who plays.</p>
-        <p>My background includes work as a talent in the entertainment industry. That presence is here as warmth and connection, the ability to make a conversation feel alive, not as a performance.</p>
+        <h2>What I bring</h2>
+        <p>I coached clients in T. Harv Eker’s Peak Potentials Training. That is part of my background as a coach. The work I do with golfers is my own: customized, one conversation at a time, not a replay of someone else’s program.</p>
+        <p>I also hold a Doctorate in Metaphysics, which deepens how I listen and how I help you believe in yourself. This is not clinical psychology and it is not a replacement for a teaching pro. It is coaching for the human being who plays.</p>
+        <p>My background includes work as a talent in the entertainment industry. That presence is here as warmth and connection, the ability to make a conversation feel alive, not as a performance. Together, that is the style: intuitive, empathic, and built around you.</p>
       </div>
     </section>
     <section class="section">
@@ -536,22 +546,22 @@ pages["about.html"] = page(
 
 pages["philosophy.html"] = page(
     "philosophy",
-    "Golf Mindset Philosophy | The Inner Game | Danielle Seadia",
-    "Danielle Seadia’s golf mindset philosophy: change the golf blueprint, stop letting score run the round, and believe you can hit good shots again.",
+    "Golf Mindset Philosophy | Danielle Seadia",
+    "Danielle Seadia’s golf mindset philosophy: a customized conversation, belief in the next shot, and a way back to enjoying the game.",
     """
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Philosophy</p>
-        <h1>Your golf blueprint is running the round.</h1>
-        <p class="lede">What you have heard, seen, and decided about your game quietly sets the ceiling. Change that, and both the shots and the enjoyment can return.</p>
+        <h1>A customized conversation. Not a packaged program.</h1>
+        <p class="lede">Each golfer is different. Danielle tunes in to you, works in her own style, and leaves you believing the next shot can be a good one.</p>
       </div>
     </section>
     <section class="section-tight">
       <div class="wrap split">
         <div class="prose">
-          <h2>The thermostat</h2>
-          <p>Even after a good shot or a good nine, the old story tries to pull you back to what feels familiar. That is the golf thermostat. Unless we change it, you keep recreating the same round.</p>
-          <p>This is why “just enjoy it” does not work when you are not hitting good shots. Enjoyment and skill both come back when the inner game changes, not when you grind harder on the number.</p>
+          <h2>The old story is still in the way</h2>
+          <p>Even after a good shot or a good nine, the old story tries to pull you back to what feels familiar. That is why “just enjoy it” does not work when you are not hitting good shots.</p>
+          <p>Enjoyment and skill both come back when you believe you can, not when you grind harder on the number.</p>
         </div>
         <div class="frame">
           <img src="/images/golfer.jpg" alt="A golf ball balanced on the edge of the hole">
@@ -560,28 +570,28 @@ pages["philosophy.html"] = page(
     </section>
     <section class="section bg-cream">
       <div class="wrap">
-        <p class="eyebrow">On the call</p>
-        <h2>Four steps that change the next shot</h2>
+        <p class="eyebrow">Her style</p>
+        <h2>How Danielle actually works</h2>
         <div class="grid-2" style="margin-top:2rem">
           <article class="card">
             <div class="num">01</div>
-            <h3>Notice the thought</h3>
-            <p>We name what you actually tell yourself on the tee, after a miss, and when the clubs stay in the garage.</p>
+            <h3>She tunes in</h3>
+            <p>Intuitive and empathic. She hears what is actually in the way for you, not a script she uses with every golfer.</p>
           </article>
           <article class="card">
             <div class="num">02</div>
-            <h3>See where it came from</h3>
-            <p>Blueprints are learned. Once you see the source, it stops feeling like the truth of your golf.</p>
+            <h3>She makes it yours</h3>
+            <p>Entertainment-industry presence and a doctorate in metaphysics sit behind a conversation that feels alive, warm, and honest.</p>
           </article>
           <article class="card">
             <div class="num">03</div>
-            <h3>Challenge it</h3>
-            <p>We test the old ceiling. You do not have to keep a story that has never hit a good shot for you.</p>
+            <h3>Belief first</h3>
+            <p>The work is helping you believe in yourself and your potential, then showing yourself you can hit good shots.</p>
           </article>
           <article class="card">
             <div class="num">04</div>
-            <h3>Install a new one</h3>
-            <p>A new way of thinking, small enough to take to the next shot, the next chip, the next nine.</p>
+            <h3>One next step</h3>
+            <p>You hang up with something small enough to take this week: the next shot, the next chip, the next nine.</p>
           </article>
         </div>
       </div>
@@ -602,7 +612,7 @@ pages["philosophy.html"] = page(
       <div class="wrap grid-2">
         <article class="card">
           <h3>What this is</h3>
-          <p>Personalized inner-game coaching. A telephone conversation, a belief you can stand in, and a next step small enough to do this week.</p>
+          <p>Personalized golf mindset coaching in Danielle’s own style. A telephone conversation, a belief you can stand in, and a next step small enough to do this week.</p>
         </article>
         <article class="card">
           <h3>What this is not</h3>
@@ -613,7 +623,7 @@ pages["philosophy.html"] = page(
     <section class="section bg-forest">
       <div class="wrap">
         <h2>If you remember one thing</h2>
-        <p class="lede">The clubs will wait. The old blueprint will not change by itself. Book the call.</p>
+        <p class="lede">The clubs will wait. Belief will not return by itself. Book the call.</p>
         <div class="actions">
           <a class="btn btn-primary" href="/book.html">Book Now</a>
           <a class="btn btn-ghost" href="/services.html">See the sessions</a>
@@ -632,7 +642,7 @@ pages["services.html"] = page(
       <div class="wrap">
         <p class="eyebrow">Services</p>
         <h1>Personal golf mindset coaching, by the session.</h1>
-        <p class="lede">Telephone. Nationwide and worldwide. Choose a half hour or one hour, leave your details, and Danielle calls you. Payment is set up on the phone, not on this site.</p>
+        <p class="lede">Telephone. Nationwide and worldwide. Choose a half hour or one hour, leave your details, and Danielle calls you. Payment is set up on the phone, not on this site. All sales are final. No refunds.</p>
       </div>
     </section>
     <section class="section-tight">
@@ -646,7 +656,7 @@ pages["services.html"] = page(
         <article class="price-card featured">
           <div class="num">1 hour</div>
           <h3>Full session</h3>
-          <p>Time to work the golf blueprint, the round you cannot enjoy, and a plan you will actually use this week.</p>
+          <p>Time to work the round you cannot enjoy, and a plan you will actually use this week.</p>
           <a class="btn btn-primary" href="/book.html#session">Book 1 hour</a>
         </article>
       </div>
@@ -670,10 +680,10 @@ pages["services.html"] = page(
     </section>
     <section class="section">
       <div class="wrap grid-2">
-        <article class="bonus-card">
-          <p class="eyebrow">After a session</p>
-          <h3>A bonus if you want to be generous</h3>
-          <p>Optional. If the call moved you, Danielle can share how to leave a bonus when you speak. Nothing to pay on this site.</p>
+        <article class="card">
+          <p class="eyebrow">Policy</p>
+          <h3>All sales are final</h3>
+          <p>No refunds. Sessions are personalized coaching, prepared for you. Danielle sets up payment on the telephone when she calls to confirm.</p>
         </article>
         <article class="card">
           <p class="eyebrow">Refer a golfer</p>
@@ -715,7 +725,7 @@ pages["process.html"] = page(
         <article class="hole">
           <div class="num">01 · Choose</div>
           <h3>Half hour or 1 hour</h3>
-          <p>Choose a length and leave your name, number, and what feels difficult right now. Payment is set up on the call, not on this site.</p>
+          <p>Choose a length and leave your name, number, and what feels difficult right now. Payment is set up on the call, not on this site. All sales are final. No refunds.</p>
         </article>
         <article class="hole">
           <div class="num">02 · The call</div>
@@ -723,14 +733,14 @@ pages["process.html"] = page(
           <p>Not a Zoom link. A real phone call, nationwide or worldwide. Two voices. No screen in the way.</p>
         </article>
         <article class="hole">
-          <div class="num">03 · The inner game</div>
-          <h3>Notice, challenge, install</h3>
-          <p>We find the thought that is capping you, challenge the old blueprint, and install a new one you can take to the next shot.</p>
+          <div class="num">03 · The conversation</div>
+          <h3>Customized for you</h3>
+          <p>She works in her own style. No canned script. You hang up with a next step you can take to the next shot.</p>
         </article>
         <article class="hole">
           <div class="num">04 · The follow-up</div>
           <h3>Come back if it helped</h3>
-          <p>Book another session when you are ready. Refer a golfer you know. If you want to leave a bonus, Danielle will share how on the phone.</p>
+          <p>Book another session when you are ready. Refer a golfer you know.</p>
         </article>
       </div>
     </section>
@@ -749,7 +759,7 @@ pages["process.html"] = page(
     <section class="section">
       <div class="wrap">
         <h2>Ready when you are.</h2>
-        <p class="lede">A half hour or one hour. Payment is set up when Danielle calls.</p>
+        <p class="lede">A half hour or one hour. Payment is set up when Danielle calls. All sales are final.</p>
         <a class="btn btn-primary" href="/book.html">Book Now</a>
       </div>
     </section>
@@ -792,8 +802,8 @@ pages["stories.html"] = page(
             <p>“It’s still hard to enjoy when I don’t hit any good shots.” That is an inner-game problem, not a character problem.</p>
           </article>
           <article class="card">
-            <h3>The old ceiling</h3>
-            <p>You had a good hole. The thermostat pulled you back. The blueprint can be changed. That is the call.</p>
+            <h3>The old story</h3>
+            <p>You had a good hole. Then the old story came back. That is the call.</p>
           </article>
         </div>
       </div>
@@ -811,7 +821,7 @@ pages["stories.html"] = page(
 pages["faq.html"] = page(
     "faq",
     "Golf Mindset Coaching FAQ | Danielle Seadia",
-    "Answers about Danielle Seadia’s telephone golf mindset coaching: sessions, pricing, worldwide calls, referrals, and how this differs from therapy.",
+    "Answers about Danielle Seadia’s telephone golf mindset coaching: sessions, payment, refunds, worldwide calls, referrals, and how this differs from therapy.",
     """
     <section class="page-hero">
       <div class="wrap">
@@ -836,7 +846,7 @@ pages["faq.html"] = page(
         </details>
         <details class="faq-item">
           <summary>How long are sessions?</summary>
-          <p>Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment when she calls you.</p>
+          <p>Sessions are a half hour or one hour. There is no checkout on the website. Danielle sets up payment when she calls you. All sales are final. No refunds.</p>
         </details>
         <details class="faq-item">
           <summary>Is this only for low handicaps?</summary>
@@ -848,11 +858,11 @@ pages["faq.html"] = page(
         </details>
         <details class="faq-item">
           <summary>How do I pay?</summary>
-          <p>There is no checkout on this website. Danielle sets up payment on the telephone when she calls to confirm your session.</p>
+          <p>There is no checkout on this website. Danielle sets up payment on the telephone when she calls to confirm your session. All sales are final. No refunds, because the coaching is personalized.</p>
         </details>
-        <details class="faq-item">
-          <summary>Can I leave a bonus after a session?</summary>
-          <p>Yes. If you enjoyed the call and want to be generous, Danielle will share how on the telephone. Nothing to pay on this site.</p>
+        <details class="faq-item" id="policy">
+          <summary>What is the refund policy?</summary>
+          <p>All sales are final. There are no refunds. Sessions are personalized coaching, prepared for you. Please book only when you are ready to take the call.</p>
         </details>
         <details class="faq-item">
           <summary>How does the referral credit work?</summary>
@@ -891,6 +901,7 @@ pages["contact.html"] = page(
             CONTACT_FIELDS,
             "Send the note",
             "Got it. Danielle will telephone you. Keep your phone close.",
+            "Danielle receives this and calls you by telephone. No video. No camera.",
         )}
         <div class="prose">
           <h2>What happens next</h2>
@@ -914,7 +925,7 @@ pages["book.html"] = page(
       <div class="wrap">
         <p class="eyebrow">Book</p>
         <h1>Choose a session. Then she calls.</h1>
-        <p class="lede">Choose a session, leave your details, and Danielle telephones you. Payment is set up on that call, not on this site.</p>
+        <p class="lede">Choose a session, leave your details, and Danielle telephones you. Payment is set up on that call, not on this site. All sales are final. No refunds.</p>
       </div>
     </section>
     <section class="section-tight">
@@ -946,7 +957,7 @@ pages["book.html"] = page(
             <button type="button" class="price-card featured" data-session="1 hour">
               <div class="num">Full session</div>
               <h3>1 hour</h3>
-              <p>Room to work the golf blueprint and a plan you will actually use.</p>
+              <p>Room to go deeper on the round you cannot enjoy, and a plan you will actually use.</p>
             </button>
           </div>
           <p class="book-error" hidden>Choose a half hour or 1 hour to continue.</p>
@@ -991,7 +1002,7 @@ pages["book.html"] = page(
               <button type="button" class="btn btn-outline" data-back="session">Back</button>
               <button type="submit" class="btn btn-primary">Send to Danielle</button>
             </div>
-            <p class="form-note">No video. No camera. Danielle will call you and set up payment on the phone.</p>
+            <p class="form-note">No video. No camera. Danielle will call you and set up payment on the phone. All sales are final. No refunds.</p>
           </form>
         </div>
       </div>
@@ -1029,7 +1040,7 @@ pages["thanks.html"] = page(
           </span>
           <p class="eyebrow">Thank you</p>
           <h1 id="thanks-title">You’re all set.</h1>
-          <p class="lede" id="thanks-copy">Danielle has your details. She will telephone you and set up payment on that call.</p>
+          <p class="lede" id="thanks-copy">Danielle has your details. She will telephone you and set up payment on that call. All sales are final.</p>
           <p class="form-note" id="thanks-note">Watch your inbox. Keep your phone close.</p>
           <div class="book-actions" style="justify-content:center">
             <a class="btn btn-primary" href="/">Back to home</a>
