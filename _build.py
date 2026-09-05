@@ -2,8 +2,9 @@ from pathlib import Path
 
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
+BRAND_LOGO = '<span class="brand-cap">D</span>anielle <span class="brand-cap">S</span>eadia'
 ROOT = Path(__file__).parent
-ASSET_V = "21"
+ASSET_V = "22"
 
 # FormSubmit only accepts a real inbox until it issues its own random string
 # after the first activation. MD5 of the address is not a valid endpoint.
@@ -45,7 +46,7 @@ HEADER = f"""
       <a class="brand" href="/">
         <img class="brand-mark" src="/icons/favicon.svg?v={ASSET_V}" alt="">
         <span class="brand-text">
-          <span class="brand-name">{BRAND}</span>
+          <span class="brand-name">{BRAND_LOGO}</span>
           <span class="brand-sub">Golf Mindset Coaching</span>
         </span>
       </a>
@@ -61,7 +62,7 @@ FOOTER = f"""
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <h3 class="footer-brand">{BRAND}</h3>
+        <h3 class="footer-brand">{BRAND_LOGO}</h3>
         <p>Personalized golf mindset coaching by telephone. Nationwide and worldwide.</p>
       </div>
       <div>
@@ -115,7 +116,7 @@ def page(slug, title, description, body, extra_head="", robots="index,follow"):
   <link rel="icon" href="/icons/favicon.svg?v={ASSET_V}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=The+Nautigal&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css?v={ASSET_V}">
   {extra_head}
 </head>
