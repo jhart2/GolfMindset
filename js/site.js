@@ -4,8 +4,8 @@
   const nav = document.querySelector(".nav");
   const page = document.body.dataset.page || "";
   const groups = {
-    about: ["about", "philosophy"],
-    work: ["services", "process", "book"],
+    about: ["about", "philosophy", "article"],
+    work: ["services", "process", "method", "book"],
   };
 
   document.querySelectorAll(`[data-nav="${page}"]`).forEach((link) => {
@@ -94,6 +94,90 @@
       if (hash() !== "refer") history.pushState(null, "", "#refer");
       scrollToId("refer", true);
     });
+  });
+
+  const callContext = { timezone: "", localTime: "", country: "" };
+
+  const writeCallContext = (form, dropEmptyCountry = false) => {
+    const set = (name, value) => {
+      const input = form.querySelector(`input[name="${name}"]`);
+      if (!input) return;
+      if (value) input.value = value;
+      else if (dropEmptyCountry && name === "country") input.remove();
+    };
+    set("timezone", callContext.timezone);
+    set("local_time", callContext.localTime);
+    set("country", callContext.country);
+  };
+
+  const applyCallContext = () => {
+    document.querySelectorAll("form.form").forEach(writeCallContext);
+    const hint = callContext.localTime
+      ? `Times are in your local time: ${callContext.localTime}.`
+      : "Times are in your local time.";
+    document.querySelectorAll("[data-local-time]").forEach((el) => {
+      el.textContent = hint;
+    });
+  };
+
+  const formatOffset = () => {
+    const minutes = -new Date().getTimezoneOffset();
+    const sign = minutes >= 0 ? "+" : "-";
+    const abs = Math.abs(minutes);
+    const hh = String(Math.floor(abs / 60)).padStart(2, "0");
+    const mm = String(abs % 60).padStart(2, "0");
+    return `UTC${sign}${hh}:${mm}`;
+  };
+
+  const detectCallContext = async () => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    const utc = formatOffset();
+    let localTime = timezone ? `${timezone} (${utc})` : utc;
+    try {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: timezone || undefined,
+        timeZoneName: "long",
+      }).formatToParts(new Date());
+      const name = parts.find((part) => part.type === "timeZoneName")?.value;
+      if (name) localTime = `${name} (${utc})`;
+    } catch {
+      /* keep IANA zone + offset */
+    }
+    callContext.timezone = timezone;
+    callContext.localTime = localTime;
+    applyCallContext();
+
+    try {
+      const sources = [
+        ["https://get.geojs.io/v1/ip/geo.json", (data) => data?.country],
+        ["https://ipapi.co/json/", (data) => data?.country_name],
+      ];
+      for (const [url, pick] of sources) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 2500);
+        try {
+          const res = await fetch(url, { signal: ctrl.signal });
+          const data = res.ok ? await res.json() : null;
+          const country = data ? pick(data) : "";
+          if (country) {
+            callContext.country = country;
+            applyCallContext();
+            break;
+          }
+        } catch {
+          /* try the next lookup */
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+    } catch {
+      /* timezone is enough if country lookup is blocked */
+    }
+  };
+
+  detectCallContext();
+  document.querySelectorAll("form.form").forEach((form) => {
+    form.addEventListener("submit", () => writeCallContext(form, true));
   });
 
   const flow = document.querySelector("#book-flow");

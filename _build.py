@@ -3,7 +3,7 @@ from pathlib import Path
 SITE = "https://danielle-golf-mindset.web.app"
 BRAND = "Danielle Seadia"
 ROOT = Path(__file__).parent
-ASSET_V = "18"
+ASSET_V = "21"
 
 # FormSubmit only accepts a real inbox until it issues its own random string
 # after the first activation. MD5 of the address is not a valid endpoint.
@@ -17,6 +17,7 @@ NAV = """
           <div class="nav-drop">
             <a href="/about.html" data-nav="about">Background</a>
             <a href="/philosophy.html" data-nav="philosophy">Philosophy</a>
+            <a href="/article.html" data-nav="article">Article</a>
           </div>
         </div>
         <div class="nav-item" data-nav-group="work">
@@ -24,6 +25,7 @@ NAV = """
           <div class="nav-drop">
             <a href="/services.html" data-nav="services">Services</a>
             <a href="/process.html" data-nav="process">How it works</a>
+            <a href="/method.html" data-nav="method">Method</a>
             <a href="/book.html" data-nav="book">Book Now</a>
           </div>
         </div>
@@ -60,13 +62,15 @@ FOOTER = f"""
     <div class="wrap footer-grid">
       <div>
         <h3 class="footer-brand">{BRAND}</h3>
-        <p>Personalized golf mindset coaching by telephone. Nationwide and worldwide, from the Boston, Massachusetts area.</p>
+        <p>Personalized golf mindset coaching by telephone. Nationwide and worldwide.</p>
       </div>
       <div>
         <h3>Explore</h3>
         <div class="footer-links">
           <a href="/about.html">Background</a>
           <a href="/philosophy.html">Philosophy</a>
+          <a href="/article.html">Article</a>
+          <a href="/method.html">Method</a>
           <a href="/services.html">Services</a>
           <a href="/process.html">How it works</a>
           <a href="/stories.html">Golfer stories</a>
@@ -148,10 +152,13 @@ def form_html(name, subject, extra_fields, submit_label, success_copy, note=None
 """
 
 
-INQUIRY_FIELDS = """
-            <label>Name <input name="name" required autocomplete="name"></label>
-            <label>Phone number <input type="tel" name="phone" required autocomplete="tel"></label>
-            <label>Email <input type="email" name="email" required autocomplete="email"></label>
+LOCATION_FIELDS = """
+            <input type="hidden" name="timezone" value="">
+            <input type="hidden" name="local_time" value="">
+            <input type="hidden" name="country" value="">
+"""
+
+CALLTIME_FIELD = """
             <label>Best time to call
               <select name="calltime">
                 <option>Weekday morning</option>
@@ -160,7 +167,16 @@ INQUIRY_FIELDS = """
                 <option>Weekend</option>
                 <option>Any time</option>
               </select>
+              <span class="field-hint" data-local-time>Times are in your local time.</span>
             </label>
+"""
+
+INQUIRY_FIELDS = f"""
+            <label>Name <input name="name" required autocomplete="name"></label>
+            <label>Phone number <input type="tel" name="phone" required autocomplete="tel"></label>
+            <label>Email <input type="email" name="email" required autocomplete="email"></label>
+            {LOCATION_FIELDS}
+            {CALLTIME_FIELD}
             <label>Session
               <select name="session">
                 <option>Half hour</option>
@@ -176,19 +192,12 @@ INQUIRY_FIELDS = """
             </label>
 """
 
-CONTACT_FIELDS = """
+CONTACT_FIELDS = f"""
             <label>Name <input name="name" required autocomplete="name"></label>
             <label>Phone number <input type="tel" name="phone" required autocomplete="tel"></label>
             <label>Email <input type="email" name="email" required autocomplete="email"></label>
-            <label>Best time to call
-              <select name="calltime">
-                <option>Weekday morning</option>
-                <option>Weekday afternoon</option>
-                <option>Weekday evening</option>
-                <option>Weekend</option>
-                <option>Any time</option>
-              </select>
-            </label>
+            {LOCATION_FIELDS}
+            {CALLTIME_FIELD}
             <label>Where are you in the game?
               <select name="season">
                 <option>The clubs are in the garage</option>
@@ -225,12 +234,8 @@ SCHEMA = f"""
   "url": "{SITE}/",
   "areaServed": [
     {{
-      "@type": "City",
-      "name": "Boston",
-      "containedInPlace": {{
-        "@type": "State",
-        "name": "Massachusetts"
-      }}
+      "@type": "Country",
+      "name": "United States"
     }},
     {{
       "@type": "AdministrativeArea",
@@ -272,7 +277,7 @@ FAQ_SCHEMA = """
       "name": "What is golf mindset coaching with Danielle Seadia?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "One-to-one telephone coaching for the inner game of golf. Danielle helps golfers change the thoughts that cap their shots and their enjoyment, then choose a next step they will actually take."
+        "text": "One-to-one telephone coaching for the inner game of golf. Danielle helps golfers change the thoughts that limit their shots and their enjoyment, then choose a next step they will actually take."
       }
     },
     {
@@ -280,15 +285,15 @@ FAQ_SCHEMA = """
       "name": "Do I need to be a low handicap?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Danielle works with any committed golfer, including players returning after time away and players who still go out but cannot enjoy the round."
+        "text": "No. This is for golfers of any ability who want to rediscover the joy."
       }
     },
     {
       "@type": "Question",
-      "name": "Where is Danielle based and where does she coach?",
+      "name": "Where does Danielle coach?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "She is based in the Boston, Massachusetts area and coaches nationwide and worldwide by telephone. If you can answer a regular phone, you can work with her."
+        "text": "Nationwide and worldwide by telephone. If you can answer a regular phone, you can work with her."
       }
     },
     {
@@ -401,7 +406,7 @@ pages["index.html"] = page(
           <article class="hole">
             <div class="num">03</div>
             <h3>A phone call from anywhere</h3>
-            <p>Boston-based. Nationwide and worldwide. If you can answer a regular telephone, you can do this work.</p>
+            <p>Nationwide and worldwide. If you can answer a regular telephone, you can do this work.</p>
           </article>
         </div>
       </div>
@@ -440,7 +445,7 @@ pages["index.html"] = page(
           <article class="price-card featured">
             <div class="num">Full session</div>
             <h3>1 hour</h3>
-            <p>Room to go deeper: the round you cannot enjoy, and a plan you will actually use.</p>
+            <p>Time to go deeper: create a plan you will actually use to enjoy your next round.</p>
             <a class="btn btn-primary" href="/book.html#session">Book 1 hour</a>
           </article>
         </div>
@@ -452,7 +457,7 @@ pages["index.html"] = page(
         <div>
           <p class="eyebrow">How we talk</p>
           <h2>Phone. Not video. Not an app.</h2>
-          <p>You write. Danielle calls. Two people talking about the game, about the thought that is capping you, about the next shot you can believe in. Based near Boston. Available anywhere a phone can ring.</p>
+          <p>You write. Danielle calls. Two people talking about the game, about the thought that is limiting you, about the next shot you can believe in. Available anywhere a phone can ring.</p>
           <div class="actions">
             <a class="btn btn-primary" href="/process.html">See how a call works</a>
             <a class="btn btn-ghost" href="/book.html">Book Now</a>
@@ -484,7 +489,7 @@ pages["index.html"] = page(
 pages["about.html"] = page(
     "about",
     "About Danielle Seadia | Golf Mindset Coach",
-    "Danielle Seadia offers personalized, empathic golf mindset coaching by telephone. Inner-game training, Boston-based, available nationwide and worldwide.",
+    "Danielle Seadia offers personalized, empathic golf mindset coaching by telephone. Inner-game training, available nationwide and worldwide.",
     """
     <section class="page-hero">
       <div class="wrap">
@@ -518,8 +523,8 @@ pages["about.html"] = page(
     <section class="section">
       <div class="wrap grid-3">
         <article class="card">
-          <h3>Where I am</h3>
-          <p>Based in the Boston, Massachusetts area. Coaching nationwide and worldwide by telephone.</p>
+          <h3>Where I coach</h3>
+          <p>Nationwide and worldwide by telephone. If you can answer a regular phone, you can do this work.</p>
         </article>
         <article class="card">
           <h3>How I show up</h3>
@@ -627,6 +632,145 @@ pages["philosophy.html"] = page(
         <div class="actions">
           <a class="btn btn-primary" href="/book.html">Book Now</a>
           <a class="btn btn-ghost" href="/services.html">See the sessions</a>
+        </div>
+      </div>
+    </section>
+    """,
+)
+
+pages["article.html"] = page(
+    "article",
+    "The Shot You Don’t Hit | Danielle Seadia",
+    "Danielle Seadia on winning the round before you tee off. Golf is 90 percent metaphysics and 10 percent mechanics.",
+    """
+    <section class="page-hero page-hero-long">
+      <div class="wrap">
+        <p class="eyebrow">Article</p>
+        <h1>The Shot You Don’t Hit</h1>
+        <p class="lede">How to Win the Round Before You Ever Tee Off</p>
+        <p class="article-byline">By Dr. Danielle Seadia, Golf Mindset Coach. Multi-award-winning talent. Doctorate in Metaphysics.</p>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap prose">
+        <p>You can buy a $700 driver.</p>
+        <p>You can take 100 lessons on swing plane.</p>
+        <p>You can practice putting until your hands blister.</p>
+        <p>But if you lose the hole between your ears, none of it matters.</p>
+        <p>I know, because I have lived in two worlds that demand the exact same thing: performance under pressure.</p>
+        <p>For over 20+ years I worked as a multi award-winning talent in the entertainment industry. Lights, cameras, one take. There is no do over. Then I earned a Doctorate in Metaphysics. Not to read tea leaves. To study what actually happens in the human mind in the 3 seconds between thought and action.</p>
+        <p>Now I coach golfers. And here is the truth no one told you: <em>Golf is 90% metaphysics and 10% mechanics.</em></p>
+
+        <h2>1. The Course Exists Twice</h2>
+        <p>In metaphysics we say: What you see is a reflection of what you first believed.</p>
+        <p>Every round, you play two courses. The one with bunkers and greens. And the one in your head.</p>
+        <p>Most golfers walk to the first tee already narrating: “Don’t hit it left. Don’t chunk this. Remember last week.” You just programmed the miss.</p>
+        <p>When I wanted to be cast in roles so bad I would tell myself this is life or death. Talk about pressure.</p>
+        <p><em>Shift:</em> Before every shot, replace the “don’t” reel with a 3-second director’s cut. See the ball, see the landing, feel the finish. One scene. No blooper reel.</p>
+
+        <h2>2. Pressure Isn’t Real. It’s a Role You’re Playing</h2>
+        <p>On set, I had to deliver in front of a crew. The only difference between terror and flow was the story I told myself: “Everyone’s judging me” vs. “I was hired for this moment.”</p>
+        <p>Golfers do this on every 3-foot putt. You make the putt mean something: your handicap, your buddy’s respect, your self-worth. That’s not pressure. That’s meaning you assigned.</p>
+        <p>In my work, I use <em>The Role Reset</em>. Before the shot, you drop the role of “golfer who has to make this” and step into “the observer.” The observer doesn’t care. The observer just watches the ball go. When you stop performing and start observing, your tempo returns.</p>
+
+        <h2>3. Your Scorecard Is a Belief System</h2>
+        <p>A Doctorate in Metaphysics taught me: Your results are downstream of your beliefs.</p>
+        <p>If you believe “I’m a 14 handicap who always blows up on 16,” you will. Not because of your swing. Because your subconscious will find evidence to prove you right.</p>
+        <p>We do this work with 3 questions I give every client:</p>
+        <ol>
+          <li>What story am I telling right now?</li>
+          <li>Is it true, or is it a line from an old script?</li>
+          <li>What’s the new line? “I adapt to greens.” “I finish strong.”</li>
+        </ol>
+        <p>Say it. Feel it. Hit from it.</p>
+        <p>This isn’t positive thinking. This is neurological reprogramming. The same process actors use to become someone else in 30 seconds.</p>
+
+        <h2>Your Next Round Starts Now</h2>
+        <p>If this resonated, it’s because some part of you already knows: your best golf isn’t a swing fix away. It’s a mindset shift away.</p>
+        <p>I work 1:1 with competitive amateurs and club players who are done letting their mind beat them before the back nine. We don’t talk about grip. We rewire the 6 inches between your ears so your swing can finally show up under pressure.</p>
+        <p>Spots are limited. The trophy isn’t won on 18. It’s won in the moment you decide who you’re going to be before you hit shot 1.</p>
+        <p>See you on the first tee.<br>— Dr. Danielle Seadia</p>
+        <div class="actions" style="margin-top:2rem">
+          <a class="btn btn-primary" href="/book.html">Book Now</a>
+          <a class="btn btn-outline" href="/method.html">Read the method</a>
+        </div>
+      </div>
+    </section>
+    """,
+)
+
+pages["method.html"] = page(
+    "method",
+    "The Role Reset Method | Danielle Seadia",
+    "The Role Reset is Danielle Seadia’s signature golf mindset method. Drop the role. Become the observer. Then hit.",
+    """
+    <section class="page-hero page-hero-long">
+      <div class="wrap">
+        <p class="eyebrow">Method</p>
+        <h1>The Role Reset</h1>
+        <p class="lede">Danielle Seadia’s signature golf mindset method. Win the round before you ever tee off.</p>
+      </div>
+    </section>
+    <section class="section-tight">
+      <div class="wrap split">
+        <div class="prose">
+          <h2>A named way of working. Still built around you.</h2>
+          <p>Other coaches have a signature method. This is Danielle’s: <em>The Role Reset</em>.</p>
+          <p>Before the shot, you drop the role of “golfer who has to make this” and step into “the observer.” The observer doesn’t care. The observer just watches the ball go. When you stop performing and start observing, your tempo returns.</p>
+          <p>It is not a canned script and not a seminar replay. It is her method inside a customized telephone conversation.</p>
+        </div>
+        <div class="frame">
+          <img src="/images/practice.jpg" alt="An iron addressing a ball on lush green turf">
+        </div>
+      </div>
+    </section>
+    <section class="section bg-cream">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
+        <h2>Three moves before you swing</h2>
+        <div class="grid-2" style="margin-top:2rem">
+          <article class="card">
+            <div class="num">01</div>
+            <h3>The course exists twice</h3>
+            <p>You play the bunkers and greens, and you play the course in your head. What you see is a reflection of what you first believed. Most golfers walk to the first tee already narrating the miss.</p>
+          </article>
+          <article class="card">
+            <div class="num">02</div>
+            <h3>Pressure is a role</h3>
+            <p>On set, the only difference between terror and flow was the story: “Everyone’s judging me” vs. “I was hired for this moment.” A 3-foot putt is the same. That is not pressure. That is meaning you assigned.</p>
+          </article>
+          <article class="card">
+            <div class="num">03</div>
+            <h3>The Role Reset</h3>
+            <p>Drop the role. Become the observer. Replace the “don’t” reel with a 3-second director’s cut: see the ball, see the landing, feel the finish. One scene. No blooper reel.</p>
+          </article>
+          <article class="card">
+            <div class="num">04</div>
+            <h3>Your scorecard is a belief system</h3>
+            <p>Results are downstream of beliefs. If you believe you always blow up on 16, your mind will find the evidence. Change the line. Then hit from it.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap prose">
+        <h2>Three questions, every client</h2>
+        <ol>
+          <li>What story am I telling right now?</li>
+          <li>Is it true, or is it a line from an old script?</li>
+          <li>What’s the new line? “I adapt to greens.” “I finish strong.”</li>
+        </ol>
+        <p>Say it. Feel it. Hit from it. This isn’t positive thinking. This is the same process actors use to become someone else in 30 seconds.</p>
+        <p>Golf is 90% metaphysics and 10% mechanics. The trophy isn’t won on 18. It’s won in the moment you decide who you’re going to be before you hit shot 1.</p>
+      </div>
+    </section>
+    <section class="section bg-forest">
+      <div class="wrap">
+        <h2>Bring it to your next round</h2>
+        <p class="lede">Book a telephone session. Danielle uses The Role Reset with you, one golfer at a time.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/book.html">Book Now</a>
+          <a class="btn btn-ghost" href="/article.html">Read the article</a>
         </div>
       </div>
     </section>
@@ -841,8 +985,8 @@ pages["faq.html"] = page(
           <p>No. Telephone only. If you can answer a regular phone, you can do this nationwide or worldwide.</p>
         </details>
         <details class="faq-item">
-          <summary>Where is Danielle based?</summary>
-          <p>The Boston, Massachusetts area. Sessions are by phone, so you do not need to be local.</p>
+          <summary>Where does Danielle coach?</summary>
+          <p>Nationwide and worldwide by telephone. You do not need to be local.</p>
         </details>
         <details class="faq-item">
           <summary>How long are sessions?</summary>
@@ -850,7 +994,7 @@ pages["faq.html"] = page(
         </details>
         <details class="faq-item">
           <summary>Is this only for low handicaps?</summary>
-          <p>No. Any committed golfer. Score is not the door. Showing up to the work is.</p>
+          <p>No. This is for golfers of any ability who want to rediscover the joy.</p>
         </details>
         <details class="faq-item">
           <summary>Is this therapy or a swing lesson?</summary>
@@ -977,19 +1121,12 @@ pages["book.html"] = page(
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="session" id="book-session-field" value="">
+            {LOCATION_FIELDS}
             <div class="form-fields">
               <label>Name <input name="name" required autocomplete="name"></label>
               <label>Phone number <input type="tel" name="phone" required autocomplete="tel"></label>
               <label>Email <input type="email" name="email" required autocomplete="email"></label>
-              <label>Best time to call
-                <select name="calltime">
-                  <option>Weekday morning</option>
-                  <option>Weekday afternoon</option>
-                  <option>Weekday evening</option>
-                  <option>Weekend</option>
-                  <option>Any time</option>
-                </select>
-              </label>
+              {CALLTIME_FIELD}
               <label>Who referred you? (optional)
                 <input name="referred" autocomplete="off" placeholder="Name of the golfer who sent you">
               </label>
@@ -1081,6 +1218,8 @@ urls = [
     f"{SITE}/",
     f"{SITE}/about.html",
     f"{SITE}/philosophy.html",
+    f"{SITE}/article.html",
+    f"{SITE}/method.html",
     f"{SITE}/services.html",
     f"{SITE}/process.html",
     f"{SITE}/stories.html",
